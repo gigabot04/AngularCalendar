@@ -1,0 +1,32 @@
+<section>
+  <header>
+    Organaizer: <strong>{{ dateService.date | async | moment: 'DD.MM.YYYY'}}</strong>
+    <hr>
+  </header>
+
+  <main>
+    <ul >
+      <li class="task" *ngFor="let task of tasks$ | async; let i = index">
+        <span>
+          <strong>{{ i + 1}}</strong>
+          {{ task.title }}
+        </span>
+        <button class="btn btn-primary" (click)="remove(task)">Remove</button>
+      </li>
+    </ul>
+  </main>
+  <footer>
+    <form *ngIf="form" (ngSubmit)="submit()" [formGroup]="form">
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="add a task"
+      >
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="form.invalid"
+      >Add</button>
+    </form>
+  </footer>
+</section>
