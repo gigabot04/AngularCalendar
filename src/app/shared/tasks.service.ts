@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable, Pipe } from "@angular/core";
+import { Injectable } from "@angular/core";
 import * as moment from "moment";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
 export interface Task {
@@ -21,7 +21,19 @@ export class TasksService {
   constructor(private http: HttpClient) {
   }
 
-  load(date: moment.Moment):Observable<Task[]> {
+  public loadDates = new Subject()
+
+  dataArr() {
+    return this.http
+      .get<Task[]>(`${TasksService.url}.json`)
+      .pipe(map(dates => {
+        const value = Object.keys(dates)
+          return value
+        }
+      ))
+  }
+
+  load(date: moment.Moment) {
     return this.http
       .get<Task[]>(`${TasksService.url}/${date.format('DD-MM-YYYY')}.json`)
       .pipe(map(tasks => {

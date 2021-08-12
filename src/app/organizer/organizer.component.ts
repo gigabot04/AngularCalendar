@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import * as moment from 'moment';
+import { Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { DateService } from '../shared/date.service';
 import { TasksService } from '../shared/tasks.service';
@@ -10,13 +10,18 @@ import { TasksService } from '../shared/tasks.service';
   templateUrl: './organizer.component.html',
   styleUrls: ['./organizer.component.scss']
 })
-export class OrganizerComponent implements OnInit {
+
+export class OrganizerComponent implements OnInit, AfterViewInit {
 
   form: FormGroup | null = null
 
-  public tasks$ = this.dateService.date.pipe(
-    switchMap(value=> this.tasksService.load(value))
-  )
+  private refresh = new Subject()
+
+  public tasks$ = this.refresh
+    .pipe(
+      switchMap(()=>this.dateService.date),
+      switchMap(value=>this.tasksService.load(value))
+    )
 
   constructor(public dateService: DateService, private tasksService: TasksService) {  }
 
@@ -24,6 +29,10 @@ export class OrganizerComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl('', Validators.required)
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.refresh.next()
   }
 
   submit() {
@@ -34,11 +43,9 @@ export class OrganizerComponent implements OnInit {
         title,
         date: this.dateService.date.value.format('DD-MM-YYYY')
       }
-
       this.tasksService.create(task).subscribe(task => {
-        this.tasks$ = this.dateService.date.pipe(
-          switchMap(value=> this.tasksService.load(value))
-        )
+        this.refresh.next()
+        this.tasksService.loadDates.next()
         this.form?.reset()
       }, err => console.log(err))
 
@@ -47,9 +54,8 @@ export class OrganizerComponent implements OnInit {
 
   remove(task: any) {
     this.tasksService.remove(task).subscribe(() => {
-      this.tasks$ = this.dateService.date.pipe(
-        switchMap(value=> this.tasksService.load(value))
-      )
+      this.tasksService.loadDates.next()
+      this.refresh.next()
     }, err => console.log(err))
   }
 }

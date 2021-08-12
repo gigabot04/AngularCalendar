@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { DateService } from '../shared/date.service';
+import { TasksService } from '../shared/tasks.service';
+import { switchMap } from "rxjs/operators";
 
 interface Day {
   value: moment.Moment
@@ -23,10 +25,20 @@ export class CalendarComponent implements OnInit {
 
   calendar: Week[] | null = null
 
-  constructor(private dateService: DateService) { }
+  public dates$ = this.tasksService.loadDates
+    .pipe(
+      switchMap(()=> this.tasksService.dataArr()),
+    )
+
+  constructor(private dateService: DateService, private tasksService: TasksService) { }
 
   ngOnInit(): void {
     this.dateService.date.subscribe(this.generate.bind(this))
+
+  }
+
+  ngAfterViewInit() {
+    this.tasksService.loadDates.next()
   }
 
   generate(now: moment.Moment) {

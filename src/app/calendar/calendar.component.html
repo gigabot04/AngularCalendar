@@ -15,6 +15,7 @@
     <tr *ngFor="let week of calendar">
       <td
         *ngFor="let day of week.days"
+
         [class.disabled]="day.disabled"
         (click)="select(day.value)"
       >
@@ -28,3 +29,8 @@
     </tr>
   </tbody>
 </table>
+<ul>
+  <li *ngFor="let item of dates$ | async">
+    {{item}}
+  </li>
+</ul>
