@@ -8,15 +8,13 @@ section {
 
   form {
     input {
-      background-color: rgba(#AFCDE7, 1);
+
       border: none;
       border-radius: 4px;
-      color: #fff;
+      box-shadow: 1px 1px 15px #ccc;
       padding: 10px 20px;
 
-      &::placeholder {
-        color: #fff;
-      }
+
     }
 
     button {
@@ -33,14 +31,19 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ccc;
+  box-shadow: 1px 1px 5px #ccc;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   margin-bottom: .5rem;
+  transition: 0.5s;
+
+  &:hover {
+
+    transform: scale(1.01);
+  }
 
   button {
     border-radius: 4px;
-
   }
 
 }
