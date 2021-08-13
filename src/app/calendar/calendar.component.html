@@ -1,13 +1,13 @@
 <table>
   <thead>
     <tr>
-      <th>Sun</th>
-      <th>Mon</th>
-      <th>Tue</th>
-      <th>Wen</th>
-      <th>Thu</th>
-      <th>Fri</th>
-      <th>Sat</th>
+      <th>Пн</th>
+      <th>Вт</th>
+      <th>Ср</th>
+      <th>Чт</th>
+      <th>Пт</th>
+      <th>Сб</th>
+      <th>Вс</th>
     </tr>
   </thead>
 
@@ -15,7 +15,6 @@
     <tr *ngFor="let week of calendar">
       <td
         *ngFor="let day of week.days"
-
         [class.disabled]="day.disabled"
         (click)="select(day.value)"
       >
@@ -25,12 +24,13 @@
         >
           {{day.value | moment: 'DD'}}
         </span>
+        <span
+          class="tasks"
+          *ngIf="day.value | moment: 'DD-MM-YYYY' | hasTasks: dateArr | async"
+        >
+          *
+        </span>
       </td>
     </tr>
   </tbody>
 </table>
-<ul>
-  <li *ngFor="let item of dates$ | async">
-    {{item}}
-  </li>
-</ul>

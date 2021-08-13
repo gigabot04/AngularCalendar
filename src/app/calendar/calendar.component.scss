@@ -2,7 +2,7 @@ table {
   width: 100%;
   margin-bottom: 1rem;
   border-collapse: collapse;
-  border: 1px solid #000;
+  box-shadow: 0 0 30px #AFCDE7;
 
   thead {
     th {
@@ -11,6 +11,7 @@ table {
       padding: 10px 20px;
       text-transform: uppercase;
       font-size: 32px;
+
     }
   }
 
@@ -33,6 +34,16 @@ table {
 
     &.disabled {
       opacity: .5;
+    }
+
+    .tasks {
+      position: absolute;
+      font-size: 21px;
+      color: red;
+
+      &--none {
+        display: none;
+      }
     }
 
     &:hover:not(.disabled) {

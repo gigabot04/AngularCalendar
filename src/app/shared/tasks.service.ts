@@ -18,15 +18,15 @@ interface CreateResponce {
 export class TasksService {
   static url = 'https://angular-gigabot-calendar-default-rtdb.firebaseio.com/tasks'
 
+
+
   constructor(private http: HttpClient) {
   }
-
-  public loadDates = new Subject()
 
   dataArr() {
     return this.http
       .get<Task[]>(`${TasksService.url}.json`)
-      .pipe(map(dates => {
+      .pipe(map((dates: any) => {
         const value = Object.keys(dates)
           return value
         }

@@ -1,6 +1,7 @@
 <section>
   <header>
-    Organaizer: <strong>{{ dateService.date | async | moment: 'DD.MM.YYYY'}}</strong>
+    Задачи на дату
+    {{ dateService.date | async | moment: 'DD.MM.YYYY'}}
     <hr>
   </header>
 
@@ -11,7 +12,7 @@
           <strong>{{ i + 1}}</strong>
           {{ task.title }}
         </span>
-        <button class="btn btn-primary" (click)="remove(task)">Remove</button>
+        <button class="btn btn-primary" (click)="remove(task)">Удалить</button>
       </li>
     </ul>
   </main>
@@ -20,13 +21,13 @@
       <input
         type="text"
         formControlName="title"
-        placeholder="add a task"
+        placeholder="Впишите задачу"
       >
       <button
         type="submit"
         class="btn btn-primary btn-block"
         [disabled]="form.invalid"
-      >Add</button>
+      >Добавить</button>
     </form>
   </footer>
 </section>

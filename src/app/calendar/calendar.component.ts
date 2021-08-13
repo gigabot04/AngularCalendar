@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { DateService } from '../shared/date.service';
 import { TasksService } from '../shared/tasks.service';
-import { switchMap } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
+import { Observable, pipe, Subject } from 'rxjs';
 
 interface Day {
   value: moment.Moment
@@ -22,23 +23,14 @@ interface Week {
 })
 
 export class CalendarComponent implements OnInit {
+  dateArr: Observable<string[]> = this.tasksService.dataArr()
 
   calendar: Week[] | null = null
-
-  public dates$ = this.tasksService.loadDates
-    .pipe(
-      switchMap(()=> this.tasksService.dataArr()),
-    )
 
   constructor(private dateService: DateService, private tasksService: TasksService) { }
 
   ngOnInit(): void {
     this.dateService.date.subscribe(this.generate.bind(this))
-
-  }
-
-  ngAfterViewInit() {
-    this.tasksService.loadDates.next()
   }
 
   generate(now: moment.Moment) {
@@ -69,5 +61,4 @@ export class CalendarComponent implements OnInit {
   select(day: moment.Moment) {
     this.dateService.changeDate(day)
   }
-
 }

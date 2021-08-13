@@ -45,7 +45,6 @@ export class OrganizerComponent implements OnInit, AfterViewInit {
       }
       this.tasksService.create(task).subscribe(task => {
         this.refresh.next()
-        this.tasksService.loadDates.next()
         this.form?.reset()
       }, err => console.log(err))
 
@@ -54,7 +53,6 @@ export class OrganizerComponent implements OnInit, AfterViewInit {
 
   remove(task: any) {
     this.tasksService.remove(task).subscribe(() => {
-      this.tasksService.loadDates.next()
       this.refresh.next()
     }, err => console.log(err))
   }
