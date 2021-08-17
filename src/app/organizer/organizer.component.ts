@@ -12,7 +12,6 @@ import { TasksService } from '../shared/tasks.service';
 })
 
 export class OrganizerComponent implements OnInit, AfterViewInit {
-
   form: FormGroup | null = null
 
   private refresh = new Subject()

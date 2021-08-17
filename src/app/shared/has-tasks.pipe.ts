@@ -9,9 +9,9 @@ export class HasTasksPipe implements PipeTransform {
 
   transform(value: string, dates: Observable<string[]>): Observable<boolean> {
     return dates.pipe(map(datesArr => {
-        return datesArr.includes(value)
-      }
-    ))
+      return datesArr.includes(value)
+    }
+  ))
   }
 
 }

@@ -1,6 +1,6 @@
 section {
-
   padding: 1rem;
+  color: white;
 
   header {
     margin-bottom: 1rem;
@@ -8,42 +8,80 @@ section {
 
   form {
     input {
-
       border: none;
-      border-radius: 4px;
       box-shadow: 1px 1px 15px #ccc;
       padding: 10px 20px;
+      box-shadow: 0 0 50px rgba(#000, 0.5);
+      background-color: transparent;
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      color: white;
 
+      &::placeholder {
+        color: white;
+      }
 
     }
 
     button {
-      border-radius: 4px;
       padding: 10px 5px;
       text-transform: uppercase;
       font-weight: bold;
       letter-spacing: 0.1em;
+      box-shadow: 20px 20px 50px rgba(#000, 0.2);
+      backdrop-filter: blur(5px);
+      border-radius: 4px;
     }
   }
 }
 
 .task {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 1px 1px 5px #ccc;
+  box-shadow: 0 0 20px rgba(#000, 0.5);
+  backdrop-filter: blur(5px);
   padding: 0.5rem 1rem;
   border-radius: 4px;
   margin-bottom: .5rem;
-  transition: 0.5s;
+  transition: 0.2s;
+  color: white;
 
   &:hover {
-
+    button {
+      display: block;
+    }
     transform: scale(1.01);
   }
 
   button {
-    border-radius: 4px;
+    display: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    margin: 0;
+    padding: 0;
+    background-color: grey;
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 15px;
+      height: 1px;
+      background-color: white;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
   }
 
 }
